@@ -23,8 +23,6 @@ namespace WebApi
             config.DependencyResolver = new UnityConfig(container);
             // Rutas de API web
             config.MapHttpAttributeRoutes();
-            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            //json.UseDataContractJsonSerializer = true;
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             
             config.Routes.MapHttpRoute(
