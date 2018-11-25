@@ -1,7 +1,9 @@
-﻿using Application.UserModule.Interfaces;
+﻿using Application.SecurityModule.Handlers;
+using Application.UserModule.Interfaces;
 using Application.UserModule.Resources;
 using AutoMapper;
 using Crosscrutting.Exceptions;
+using Domain.SecurityModule.Enum;
 using Domain.UserModule.Aggregates;
 using DTO.UserModule;
 using Repository.UserModule.Interfaces;
@@ -20,6 +22,7 @@ namespace Application.UserModule
             _userRepository = userRepository;
         }
 
+        [AuditCallHandler(EnumPermision.Read,EnumObjectType.User)]
         public UserDto Get(int id)
         {
             try

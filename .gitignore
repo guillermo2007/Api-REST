@@ -3,3 +3,21 @@
 ################################################################################
 
 /packages
+/Application/obj/Debug
+/Application/bin/Debug
+/Crosscrutting/obj/Debug
+/Crosscrutting/bin/Debug
+/DAL/obj/Debug
+/DAL/bin/Debug
+/Domain/obj/Debug
+/Domain/bin/Debug
+/DTO/obj/Debug
+/DTO/bin/Debug
+/Domain/SecurityModule/Enum/EnumObjectType.cs
+/Repository/obj/Debug
+/Repository/bin/Debug
+/Repository.Test/obj
+/Repository.Test/bin/Debug/netcoreapp2.1
+/WebApi/obj/Debug
+/WebApi/bin
+/.vs/WebApi/v15
