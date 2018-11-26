@@ -9,11 +9,11 @@ namespace Repository.Base
 {
     public interface IRepositoryBase<T> where T : EntityBase
     {
-        T Get(int id);
+        T Get(Guid id);
         IEnumerable<T> GetAll();
         T Add(T entity);
         T Update(T entity);
-        void Delete(int id);
+        void Delete(Guid id);
         void Delete(T entity);
     }
 }

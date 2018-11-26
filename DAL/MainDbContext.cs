@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.SecurityModule.Aggregates;
 using Domain.UserModule.Aggregates;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,14 @@ namespace DAL
     {
         private const string _connectionString = "innocv";
         public DbSet<User> Users { get; set; }
+        public DbSet<LogAction> LogAction { get; set; }
 
-        public MainDbContext() : base (_connectionString)
+        public MainDbContext() : base(_connectionString)
         {
 
         }
 
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 

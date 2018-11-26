@@ -32,7 +32,7 @@ namespace Repository.Base
             _mainDbContext = mainDbContext;            
         }
 
-        public virtual T Get(int id)
+        public virtual T Get(Guid id)
         {            
             return Entities.Find(id);
         }
@@ -99,7 +99,7 @@ namespace Repository.Base
             }
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             var entity = Get(id);
             Delete(entity);

@@ -11,15 +11,17 @@ namespace Domain
     {
         public EntityBase()
         {
-            Id = default(int);
+            Id = default(Guid);
         }
 
-        public EntityBase(int id)
+        public EntityBase(Guid id)
         {
             Id = id;
-        }
+        }        
 
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
+
+        public void GenerateNewId() => Id = Guid.NewGuid();
     }
 }

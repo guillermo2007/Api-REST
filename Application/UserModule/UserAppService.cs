@@ -23,7 +23,7 @@ namespace Application.UserModule
         }
 
         [AuditCallHandler(EnumPermision.Read,EnumObjectType.User)]
-        public UserDto Get(int id)
+        public UserDto Get(Guid id)
         {
             try
             {
@@ -37,6 +37,7 @@ namespace Application.UserModule
             }           
         }
 
+        [AuditCallHandler(EnumPermision.Read, EnumObjectType.User)]
         public IEnumerable<UserDto> GetAll()
         {
 
@@ -74,7 +75,7 @@ namespace Application.UserModule
             }
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             try
             {

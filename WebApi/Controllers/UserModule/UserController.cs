@@ -32,7 +32,7 @@ namespace WebApi.Controllers.UserModule
 
         [HttpGet]
         [Route("get/{id}")]        
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get(Guid id)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace WebApi.Controllers.UserModule
 
         [HttpDelete]
         [Route("remove/{id}")]
-        public IHttpActionResult Delete(int id)
+        public IHttpActionResult Delete(Guid id)
         {
             try
             {

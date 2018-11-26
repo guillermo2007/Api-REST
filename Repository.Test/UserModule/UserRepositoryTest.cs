@@ -14,25 +14,31 @@ namespace Repository.Test.UserModule
     {
         public IUserRepository MockUserRepository;
 
+        private Dictionary<string, Guid> UsersGuid;
+
         public UserRepositoryTest()
         {
+            UsersGuid = new Dictionary<string, Guid>();
+            UsersGuid.Add("Guillermo", Guid.NewGuid());
+            UsersGuid.Add("Pepe", Guid.NewGuid());
+            UsersGuid.Add("Maria", Guid.NewGuid());
             IList<User> users = new List<User>()
             {
-                new User(1,"Guillermo", DateTime.Parse("29/10/1988")),
-                new User(2,"Pepe",DateTime.Parse("02/03/2008")),
-                new User(3,"Maria", DateTime.Now)
+                new User(UsersGuid["Guillermo"],"Guillermo", DateTime.Parse("29/10/1988")),
+                new User(UsersGuid["Pepe"],"Pepe",DateTime.Parse("02/03/2008")),
+                new User(UsersGuid["Maria"],"Maria", DateTime.Now)
             };        
 
             Mock<IUserRepository> mockUserRepository = new Mock<IUserRepository>();
 
             mockUserRepository.Setup(ur => ur.GetAll()).Returns(users);
-            mockUserRepository.Setup(ur => ur.Get(It.IsAny<int>())).Returns((int id) => users.Where(x => x.Id == id).First());
+            mockUserRepository.Setup(ur => ur.Get(It.IsAny<Guid>())).Returns((Guid id) => users.Where(x => x.Id == id).First());
             mockUserRepository.Setup(ur => ur.Add(It.IsAny<User>())).Returns(
                 (User user) =>
                 {
-                    if (user.Id.Equals(default(int)))
+                    if (user.Id.Equals(default(Guid)))
                     {
-                        user.Id = users.Count() + 1;
+                        user.GenerateNewId();
                         users.Add(user);
                     }
                     else
@@ -79,7 +85,7 @@ namespace Repository.Test.UserModule
         [TestMethod]
         public void CanReturnUserById()
         {
-            var user = MockUserRepository.Get(1);
+            var user = MockUserRepository.Get(UsersGuid["Guillermo"]);
 
             Assert.IsNotNull(user);
             Assert.AreEqual("Guillermo", user.Name);
@@ -89,28 +95,32 @@ namespace Repository.Test.UserModule
         public void CanInsertUser()
         {
             var user = new User("Marta", DateTime.Parse("01/01/1977"));
+            UsersGuid.Add(user.Name, user.Id);
+
 
             MockUserRepository.Add(user);
 
             var numUsers = MockUserRepository.GetAll().Count();
             Assert.AreEqual(4, numUsers);
 
-            var userNew = MockUserRepository.Get(4);
+            var userNew = MockUserRepository.Get(UsersGuid["Marta"]);
             Assert.AreEqual("Marta", userNew.Name);
         }
 
         [TestMethod]
         public void CaunUpdateUser()
         {
-            var user = MockUserRepository.Get(2);
+            var user = MockUserRepository.Get(UsersGuid["Pepe"]);
             Assert.IsNotNull(user);
             Assert.AreEqual("Pepe", user.Name);
 
             user.Name = "Alfredo";
+            UsersGuid.Remove("Pepe");
+            UsersGuid.Add(user.Name, user.Id);
             var result = MockUserRepository.Update(user);
             Assert.IsNotNull(result);
 
-            var userUpdated = MockUserRepository.Get(2);
+            var userUpdated = MockUserRepository.Get(UsersGuid["Alfredo"]);
             Assert.AreEqual("Alfredo", userUpdated.Name);
 
         }

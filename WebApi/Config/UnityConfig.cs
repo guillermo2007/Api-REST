@@ -27,7 +27,7 @@ namespace WebApi.Resolver
             {
                 return container.Resolve(serviceType);
             }
-            catch (ResolutionFailedException ex)
+            catch (ResolutionFailedException)
             {
                 return null;
             }

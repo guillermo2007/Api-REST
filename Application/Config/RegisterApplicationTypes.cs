@@ -1,4 +1,6 @@
-﻿using Application.UserModule;
+﻿using Application.SecurityModule.Contract;
+using Application.SecurityModule.Service;
+using Application.UserModule;
 using Application.UserModule.Interfaces;
 using DAL;
 using Repository.UserModule;
@@ -20,6 +22,7 @@ namespace Services.Config
             #region AppService
 
             container.RegisterType<IUserAppService, UserAppService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAuditAppService, AuditAppService>(new HierarchicalLifetimeManager());
 
             #endregion
 

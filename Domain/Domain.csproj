@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="EntityBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityModule\Aggregates\LogAction.cs" />
     <Compile Include="SecurityModule\Enum\EnumObjectType.cs" />
     <Compile Include="SecurityModule\Enum\EnumPermision.cs" />
     <Compile Include="UserModule\Aggregates\User.cs" />

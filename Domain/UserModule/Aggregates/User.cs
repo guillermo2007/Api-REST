@@ -20,7 +20,7 @@ namespace Domain.UserModule.Aggregates
             Birthdate = birthdate;
         }
 
-        public User(int id, string name, DateTime birthdate) : base (id)
+        public User(Guid id, string name, DateTime birthdate) : base (id)
         {
             Name = name;
             Birthdate = birthdate;

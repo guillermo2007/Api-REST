@@ -9,10 +9,10 @@ namespace Application.UserModule.Interfaces
 {
     public interface IUserAppService
     {
-        UserDto Get(int id);
+        UserDto Get(Guid id);
         IEnumerable<UserDto> GetAll();
         UserDto Add(UserDto value);
         UserDto Update(UserDto value);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }
