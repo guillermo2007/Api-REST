@@ -22,7 +22,7 @@ namespace Application.UserModule
             _userRepository = userRepository;
         }
 
-        [AuditCallHandler(EnumPermision.Read,EnumObjectType.User)]
+        [AuditCallHandler]
         public UserDto Get(Guid id)
         {
             try
@@ -37,7 +37,7 @@ namespace Application.UserModule
             }           
         }
 
-        [AuditCallHandler(EnumPermision.Read, EnumObjectType.User)]
+        [AuditCallHandler]
         public IEnumerable<UserDto> GetAll()
         {
 

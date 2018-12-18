@@ -1,4 +1,5 @@
 ﻿using Application.SecurityModule.Contract;
+using Application.SecurityModule.Handlers;
 using Application.SecurityModule.Service;
 using Application.UserModule;
 using Application.UserModule.Interfaces;
@@ -11,6 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
+using Unity.Interception.ContainerIntegration;
+using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
+using Unity.Interception.PolicyInjection;
 using Unity.Lifetime;
 
 namespace Services.Config
@@ -19,10 +23,17 @@ namespace Services.Config
     {
         public static void ConfigureUnity(IUnityContainer container)
         {
-            #region AppService
 
-            container.RegisterType<IUserAppService, UserAppService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IAuditAppService, AuditAppService>(new HierarchicalLifetimeManager());
+            container.AddNewExtension<Interception>();
+
+            #region AppService            
+            container.RegisterType<IUserAppService, UserAppService>(new ContainerControlledLifetimeManager(),
+                                        new InterceptionBehavior<PolicyInjectionBehavior>(),
+                                        new Interceptor<InterfaceInterceptor>());
+        
+            container.RegisterType<IAuditAppService, AuditAppService>(new ContainerControlledLifetimeManager(),
+                                        new InterceptionBehavior<PolicyInjectionBehavior>(),
+                                        new Interceptor<InterfaceInterceptor>());
 
             #endregion
 

@@ -92,6 +92,7 @@
     <Compile Include="SecurityModule\Contract\IAuditAppService.cs" />
     <Compile Include="SecurityModule\Handlers\AuditCallHandler.cs" />
     <Compile Include="SecurityModule\Handlers\AuditCallHandlerAttribute.cs" />
+    <Compile Include="SecurityModule\Handlers\AuditInterceptionBehaviour.cs" />
     <Compile Include="SecurityModule\Service\AuditAppService.cs" />
     <Compile Include="UserModule\Interfaces\IUserAppService.cs" />
     <Compile Include="UserModule\Resources\UserResource.Designer.cs">

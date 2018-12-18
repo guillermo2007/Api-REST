@@ -9,8 +9,9 @@ namespace Application.SecurityModule.Handlers
 {
     class AuditCallHandler : ICallHandler
     {
-        public EnumObjectType ScopeType { get; set; }
-        public EnumPermision OperationName { get; set; }
+        private EnumPermision Permision;
+        private EnumObjectType ObjectType;
+
         public int Order { get; set; }
 
         private IAuditAppService AuditAppService
@@ -21,49 +22,39 @@ namespace Application.SecurityModule.Handlers
             }
         }
 
-        public AuditCallHandler(EnumPermision operationName, EnumObjectType scopeType, int order)
-        {
-            OperationName = operationName;
-            ScopeType = scopeType;
-            Order = order;
-        }
+        //public AuditCallHandler(EnumPermision permision, EnumObjectType objectType)
+        //{
+        //    Permision = permision;
+        //    ObjectType = objectType;
+        //}        
 
         public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
         {
             var returnValue = getNext()(input, getNext);
-            var paramsCallMethodo = "{"; 
 
-            if (returnValue.Exception == null)
-            {
-                var data = new List<object>();
-                
-                for (int i = 0; i < input.Arguments.Count; ++i)
-                {
-                    paramsCallMethodo += input.Arguments.GetParameterInfo(i).Name + ": " + input.Arguments[i];
-                    if ((i + 1) < input.Arguments.Count)
-                    {
-                        paramsCallMethodo += " , ";
-                    }
+            var method = input.MethodBase.DeclaringType.Name + "." + input.MethodBase.Name;
+            var paramsMethod = GetParams(input);
 
-                }
-                paramsCallMethodo = paramsCallMethodo + "}";
-                data.Add(paramsCallMethodo);
-
-            }
-            else
-            {
-                //data.Add(contextoSeguridad.Dato);
-            }
-
-            AuditAppService.RegisterAudit(OperationName, ScopeType, GetIdCallMethod(input), "AuditCallHandler:Invoke", paramsCallMethodo, returnValue.Exception);
+            AuditAppService.RegisterAudit(EnumPermision.Read, EnumObjectType.User, method, paramsMethod);
 
             return returnValue;
         }
 
-        private string GetIdCallMethod(IMethodInvocation input)
+        private string GetParams(IMethodInvocation input)
         {
-            return input.MethodBase.DeclaringType.Name + "." + input.MethodBase.Name;
+            string paramsCallMethod = "{";
+            for (int i = 0; i < input.Arguments.Count; ++i)
+            {
+                paramsCallMethod += input.Arguments.GetParameterInfo(i).Name + ": " + input.Arguments[i];
+                if ((i + 1) < input.Arguments.Count)
+                {
+                    paramsCallMethod += " , ";
+                }
+
+            }
+            return paramsCallMethod + "}";                        
         }
+        
     }
 }
     
